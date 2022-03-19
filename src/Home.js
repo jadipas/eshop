@@ -10,17 +10,48 @@ function Home() {
              alt='' className='home__image'/>
 
             <div className='home__row'>
-                <Product />
+                <Product 
+                    id='152395'
+                    title='The lean startup'
+                    price={29.99}
+                    image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'
+                    rating={5}/>
+                <Product 
+                    id='152395'
+                    title='The lean startup'
+                    price={29.99}
+                    image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'
+                    rating={5}/>
             </div>
 
             <div className='home__row'>
-                {/* Product */}
-                {/* Product */}
-                {/* Product */}
+                <Product 
+                    id='152395'
+                    title='The lean startup'
+                    price={29.99}
+                    image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'
+                    rating={3}/>
+                <Product 
+                    id='152395'
+                    title='The lean startup'
+                    price={29.99}
+                    image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'
+                    rating={5}/>                
+                <Product 
+                    id='152395'
+                    title='The lean startup'
+                    price={29.99}
+                    image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'
+                    rating={4}/>
             </div>
 
             <div className='home__row'>
-                {/* Product */}
+                <Product 
+                    id='152395'
+                    title='The lean startup'
+                    price={29.99}
+                    image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'
+                    rating={5}/>
             </div>
         </div>
     </div>
