@@ -1,0 +1,3 @@
+To be implemented:
+    - Quantity buy (same item multiple times)
+    - Targeted remove or quantiifiable remove from basket (either keep order or have a multiplier eg x2 -> x1)
