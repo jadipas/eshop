@@ -14,7 +14,6 @@ function Login() {
 
         auth.signInWithEmailAndPassword(email,password)
             .then((auth) => {
-                console.log(auth);
                 if(auth) {
                     nav('/')
                 }
@@ -28,7 +27,6 @@ function Login() {
         //some firebase register
         auth.createUserWithEmailAndPassword(email, password)
             .then((auth) => {
-                console.log(auth);
                 if(auth) {
                     nav('/')
                 }
