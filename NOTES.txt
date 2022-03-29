@@ -1,3 +1,6 @@
 To be implemented:
     - Quantity buy (same item multiple times)
     - Targeted remove or quantiifiable remove from basket (either keep order or have a multiplier eg x2 -> x1)
+    - Add effects (hover, some notifiication when adding a product, smooth removal of items from basket)
+    - Footer
+    - Back to top Button
