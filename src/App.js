@@ -13,10 +13,14 @@ import Payment from "./Payment.js";
 import Login from "./Login.js";
 import { auth } from './firebase';
 import { useStateValue } from './StateProvider';
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const promise = loadStripe('pk_test_51Kk2d8LBJ8OXprnJAjjc0xgpazGuMEG7Dpi32h6VjLJQJkttEUxRxnmGzH9IymP5LX6BEMjn0m46GUM5fyZZEUYD00JSrRzkcB');
 
 function App() {
   const [{}, dispatch] = useStateValue();
-
+  
   useEffect(() => {
     //will run once when the app component loads bcs list is empty
 
@@ -66,7 +70,9 @@ function App() {
           <Route path='payment' element={
             <>
               < Header />
-              < Payment />  
+              <Elements stripe={promise}>
+                < Payment />  
+              </Elements>
             </>
           }/>
           <Route path='login' element={< Login /> }/> 
