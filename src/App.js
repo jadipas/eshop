@@ -11,6 +11,7 @@ import Home from "./Home.js";
 import Checkout from "./Checkout.js";
 import Payment from "./Payment.js";
 import Login from "./Login.js";
+import Footer from "./Footer.js";
 import { auth } from './firebase';
 import { useStateValue } from './StateProvider';
 import { loadStripe } from "@stripe/stripe-js";
@@ -59,12 +60,14 @@ function App() {
             <>
               < Header />
               < Home />
+              < Footer />
             </>
           }/> 
           <Route path='checkout' element={
             <>
               < Header />
               < Checkout />  
+              < Footer />
             </>
           }/>
           <Route path='payment' element={
@@ -73,6 +76,7 @@ function App() {
               <Elements stripe={promise}>
                 < Payment />  
               </Elements>
+              < Footer />
             </>
           }/>
           <Route path='login' element={< Login /> }/> 

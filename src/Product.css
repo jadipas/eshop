@@ -12,6 +12,11 @@
   z-index: 1;
 }
 
+.product:hover {
+  margin: 0;
+  padding: 30px;
+}
+
 .product__rating {
   display: flex;
 }
