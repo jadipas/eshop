@@ -10,6 +10,20 @@ app.use(bodyParser.json())
 
 app.use(cors())
 
+app.post("/payments/create", async (request, response) => {
+    const total = request.query.total;
+    console.log('Payment Request Received for ', total);
+
+    const paymentIntent = await stripe.paymentIntents.create({
+        amount: total,
+        currency: "USD",
+    })
+
+    //OK - Created
+    response.status(201).send({
+        clientSecret: paymentIntent.client_secret,
+    })
+})
 
 
 app.post("/payment", cors(), async (req,res) => {
