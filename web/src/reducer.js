@@ -10,10 +10,21 @@ const reducer = (state, action) => {
     
     switch(action.type){
         case 'ADD_TO_BASKET':
+            const i = state.basket.findIndex(
+                (basketItem) => basketItem.id === action.id
+            );
+            let nBasket = [...state.basket]
+
+            if(i >= 0){
+                nBasket[i].quantity += 1;
+            }else{
+                nBasket = [...state.basket, {...action.item, quantity: 1}]
+            }
+
             return {
                 ...state,
-                basket: [...state.basket, action.item],
-            };
+                basket: nBasket
+            }
         
         case 'REMOVE_FROM_BASKET':
             const index = state.basket.findIndex(
