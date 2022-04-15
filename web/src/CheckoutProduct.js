@@ -6,25 +6,31 @@ function CheckoutProduct({id, image, title, price, rating, quantity}) {
     const [{}, dispatch] = useStateValue();
     const [q, setQ] = useState(quantity); 
 
-    const removeFromBasket = () => {
+    const removeFromBasket = (e) => {
         //remove item from basket
+        e.preventDefault();
         dispatch({
             type: 'REMOVE_FROM_BASKET',
             id: id,
         })
     }
 
-    const reduceQuantity = () => {
+    const decreaseQuantity = (e) => {
         //remove item from basket
-        setQ(q-1);
-        dispatch({
-            type: 'REDUCE_QUANTITY',
-            id: id,
-        })
+        e.preventDefault();
+
+        if(q > 1){
+            setQ(q-1);
+            dispatch({
+                type: 'DECREASE_QUANTITY',
+                id: id,
+            })
+        }
     }
 
-    const increaseQuantity = () => {
+    const increaseQuantity = (e) => {
         //remove item from basket
+        e.preventDefault();
         setQ(q+1);
         dispatch({
             type: 'INCREASE_QUANTITY',
@@ -48,8 +54,8 @@ function CheckoutProduct({id, image, title, price, rating, quantity}) {
                     ))}
                 </div>
                 <div className='checkoutProduct__quantity'>
-                    <button onClick={reduceQuantity}>-</button>
-                    <p> {q} </p>
+                    <button onClick={decreaseQuantity} disabled={!(q > 1)}>-</button>
+                    <p>{q}</p>
                     <button onClick={increaseQuantity}>+</button>
                 </div>
                 <button onClick={removeFromBasket}>Remove from Basket</button>
