@@ -54,9 +54,9 @@ function CheckoutProduct({id, image, title, price, rating, quantity}) {
                     ))}
                 </div>
                 <div className='checkoutProduct__quantity'>
-                    <button onClick={decreaseQuantity} disabled={!(q > 1)}>-</button>
+                    <button className='checkoutProduct__quantityButton' onClick={decreaseQuantity} disabled={!(q > 1)}>-</button>
                     <p>{q}</p>
-                    <button onClick={increaseQuantity}>+</button>
+                    <button className='checkoutProduct__quantityButton' onClick={increaseQuantity}>+</button>
                 </div>
                 <button onClick={removeFromBasket}>Remove from Basket</button>
             </div>

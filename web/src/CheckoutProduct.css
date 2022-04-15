@@ -30,3 +30,25 @@
     font-size: 17px;
     font-weight: 800;
 }
+
+.checkoutProduct__quantity {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.checkoutProduct__quantity > p {
+    padding: 3px;
+}
+
+.checkoutProduct__quantityButton {
+    margin: 10px;
+    text-align: center;
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
+.checkoutProduct__quantityButton:active {
+    background-color: #f0c14b;
+}

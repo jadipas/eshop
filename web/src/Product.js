@@ -9,7 +9,6 @@ function Product({id, title, image, price, rating}) {
   const addToBasket = (e) => {
       // dispatch item to data layer
       e.preventDefault();
-      console.log("fired")
       dispatch({
           type: 'ADD_TO_BASKET',
           item: {

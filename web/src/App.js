@@ -27,7 +27,6 @@ function App() {
 
     
     auth.onAuthStateChanged(authUser => {
-      console.log('USER IS >>> ', authUser);
       
       dispatch({
         type: 'SET_USER',
