@@ -12,6 +12,7 @@ import Checkout from "./Checkout.js";
 import Payment from "./Payment.js";
 import Login from "./Login.js";
 import Footer from "./Footer.js";
+import Orders from "./Orders.js";
 import { auth } from './firebase';
 import { useStateValue } from './StateProvider';
 import { loadStripe } from "@stripe/stripe-js";
@@ -75,6 +76,13 @@ function App() {
               <Elements stripe={promise}>
                 < Payment />  
               </Elements>
+              < Footer />
+            </>
+          }/>
+          <Route path='orders' element={
+            <>
+              < Header />
+              < Orders />
               < Footer />
             </>
           }/>
