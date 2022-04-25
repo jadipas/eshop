@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useStateValue } from './StateProvider';
 import { auth } from './firebase';
 import { getTotalItems } from './reducer';
+import logo from './images/Fwash_Logo.png';
 
 function Header() {
   const [{ basket , user }, dispatch] = useStateValue();
@@ -19,7 +20,7 @@ function Header() {
   return (
     <div className='header'>
         <Link to='/'>
-            <img className='header__logo' src='' alt=''/>
+            <img className='header__logo' src={logo} alt=''/>
         </Link>
 
         <div className='header__search'>

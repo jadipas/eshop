@@ -53,7 +53,8 @@ function Payment() {
             dispatch({
                 type: 'EMPTY_BASKET'
             })
-            nav('/orders', {replace: true})
+            nav('/', {replace: true})
+            //nav('/orders', {replace: true})
         }) 
     }
 

@@ -20,6 +20,7 @@
   margin-top: 18px;
   border: 1px solid transparent;
   padding: 3px;
+  max-height: 60px;
 }
 
 .header__search {
@@ -39,7 +40,7 @@
 .header__searchIcon {
   padding: 5px;
   height: 22px !important;
-  background-color: #cd9042;
+  background-color: #008c96;
 }
 
 .header__optionLineOne {
