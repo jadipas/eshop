@@ -23,10 +23,11 @@ function Header() {
             <img className='header__logo' src={logo} alt=''/>
         </Link>
 
-        <div className='header__search'>
+        
+        {/*<div className='header__search'>
             <input className='header__searchInput' type='text'/>
             <SearchIcon className='header__searchIcon' />
-        </div>
+        </div>*/}
 
         <div className='header__nav'>
             <Link to={!user && '/login'}>
