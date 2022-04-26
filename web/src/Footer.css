@@ -1,7 +1,21 @@
-.footer a {
-    text-decoration: none;
+.footer {
+    display: flex;
+    background-color: black;
+    color: white;
+    height: 240px;
 }
 
-.footer a:visited {
+.footer__description {
+    margin-left: 64px;
+    margin-top: 60px;
+}
+
+.footer__socials {
+    margin-left: 50vw;
+    margin-top: 60px;
+}
+
+.footer__socials a{
+    color: white;
     text-decoration: none;
 }
