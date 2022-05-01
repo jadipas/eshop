@@ -13,6 +13,7 @@ import Payment from "./Payment.js";
 import Login from "./Login.js";
 import Footer from "./Footer.js";
 import Orders from "./Orders.js";
+import ProductPage from "./ProductPage.js";
 import { auth } from './firebase';
 import { useStateValue } from './StateProvider';
 import { loadStripe } from "@stripe/stripe-js";
@@ -34,7 +35,7 @@ function App() {
         user: authUser,
       })
 
-      /*
+      
       if (authUser) {
         //the user just logged in || was logged in
         dispatch({
@@ -48,7 +49,7 @@ function App() {
           type: 'SET_USER',
           user: null,
         })
-      }*/
+      }
       
     })
   }, [])
@@ -83,6 +84,13 @@ function App() {
             <>
               < Header />
               < Orders />
+              < Footer />
+            </>
+          }/>
+          <Route path='product_page' element={
+            <>
+              < Header />
+              < ProductPage />
               < Footer />
             </>
           }/>
