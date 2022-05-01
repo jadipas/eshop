@@ -2,6 +2,11 @@
     background-color: white;
 }
 
+.payment > h1 > a {
+    text-decoration: none;
+    color: black;
+}
+
 .payment > h1 {
     text-align: center;
     padding: 10px;

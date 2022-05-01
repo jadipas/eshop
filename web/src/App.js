@@ -14,6 +14,7 @@ import Login from "./Login.js";
 import Footer from "./Footer.js";
 import Orders from "./Orders.js";
 import ProductPage from "./ProductPage.js";
+import Wrapper from "./Wrapper.js";
 import { auth } from './firebase';
 import { useStateValue } from './StateProvider';
 import { loadStripe } from "@stripe/stripe-js";
@@ -56,47 +57,48 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app">
-        <Routes>
-          <Route path='/' element={
-            <>
-              < Header />
-              < Home />
-              < Footer />
-            </>
-          }/> 
-          <Route path='checkout' element={
-            <>
-              < Header />
-              < Checkout />  
-              < Footer />
-            </>
-          }/>
-          <Route path='payment' element={
-            <>
-              < Header />
-              <Elements stripe={promise}>
-                < Payment />  
-              </Elements>
-              < Footer />
-            </>
-          }/>
-          <Route path='orders' element={
-            <>
-              < Header />
-              < Orders />
-              < Footer />
-            </>
-          }/>
-          <Route path='product_page' element={
+        <Wrapper>
+          <Routes>
+            <Route path='/' element={
+              <>
+                < Header />
+                < Home />
+                < Footer />
+              </>
+            }/> 
+            <Route path='checkout' element={
+              <>
+                < Header />
+                < Checkout />  
+                < Footer />
+              </>
+            }/>
+            <Route path='payment' element={
+              <>
+                < Header />
+                <Elements stripe={promise}>
+                  < Payment />  
+                </Elements>
+              </>
+            }/>
+            <Route path='orders' element={
+              <>
+                < Header />
+                < Orders />
+                < Footer />
+              </>
+            }/>
+            <Route path='product_page' element={
             <>
               < Header />
               < ProductPage />
               < Footer />
             </>
           }/>
-          <Route path='login' element={< Login /> }/> 
-          <Route path='*' element={<h1>404 Page Not Found</h1>}/> 
-        </Routes>
+            <Route path='login' element={< Login /> }/> 
+            <Route path='*' element={<h1>404 Page Not Found</h1>}/> 
+          </Routes>
+        </Wrapper>
       </div>
     </BrowserRouter>
   );
