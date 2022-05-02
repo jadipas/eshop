@@ -21,11 +21,18 @@
   display: flex;
 }
 
-.product > img {
+.product > a > img {
   max-height: 200px;
   width: 100%;
   object-fit: contain;
   margin-bottom: 15px;
+  border: 2px solid transparent;
+  border-radius: 16px;
+  padding: 5px;
+}
+
+.product>a>img:hover{
+  border: 2px solid black;
 }
 
 .product > button {

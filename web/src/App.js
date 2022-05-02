@@ -13,6 +13,7 @@ import Payment from "./Payment.js";
 import Login from "./Login.js";
 import Footer from "./Footer.js";
 import Orders from "./Orders.js";
+import ProductPage from "./ProductPage.js";
 import Wrapper from "./Wrapper.js";
 import { auth } from './firebase';
 import { useStateValue } from './StateProvider';
@@ -35,7 +36,7 @@ function App() {
         user: authUser,
       })
 
-      /*
+      
       if (authUser) {
         //the user just logged in || was logged in
         dispatch({
@@ -49,7 +50,7 @@ function App() {
           type: 'SET_USER',
           user: null,
         })
-      }*/
+      }
       
     })
   }, [])
@@ -87,6 +88,13 @@ function App() {
                 < Footer />
               </>
             }/>
+            <Route path='product_page' element={
+            <>
+              < Header />
+              < ProductPage />
+              < Footer />
+            </>
+          }/>
             <Route path='login' element={< Login /> }/> 
             <Route path='*' element={<h1>404 Page Not Found</h1>}/> 
           </Routes>
