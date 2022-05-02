@@ -7,6 +7,7 @@ import CheckoutProduct from './CheckoutProduct';
 import "./Payment.css"
 import { getBasketTotal } from './reducer';
 import { useStateValue } from './StateProvider';
+import PaypalCheckoutButton from './PaypalCheckoutButton';
 
 function Payment() {
     const nav = useNavigate();
