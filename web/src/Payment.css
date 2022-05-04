@@ -30,6 +30,20 @@
     flex: 0.2;
 }
 
-.payment__address, .payment__items, .payment__details {
+.payment__address, .payment__items, .payment__options {
     flex: 0.8;
 }
+
+.payment__options {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding-right: 10px;
+}
+
+.payment__optionsDivisor{
+    width: 60%;
+    margin: 5px 20%;
+    padding: 0 30%;
+}
+
