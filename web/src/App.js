@@ -19,6 +19,7 @@ import { auth } from './firebase';
 import { useStateValue } from './StateProvider';
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
+import { PaypalScriptProvider } from "@paypal/react-paypal-js";
 
 const promise = loadStripe('pk_test_51Kk2d8LBJ8OXprnJAjjc0xgpazGuMEG7Dpi32h6VjLJQJkttEUxRxnmGzH9IymP5LX6BEMjn0m46GUM5fyZZEUYD00JSrRzkcB');
 
@@ -55,52 +56,54 @@ function App() {
     })
   }, [])
   return (
-    <BrowserRouter>
-      <div className="app">
-        <Wrapper>
-          <Routes>
-            <Route path='/' element={
+    <PaypalScriptProvider options={{"client-id": process.env.REACT_APP_PAYPAL_CLIENT_ID, "currency": "EUR"}}>
+      <BrowserRouter>
+        <div className="app">
+          <Wrapper>
+            <Routes>
+              <Route path='/' element={
+                <>
+                  < Header />
+                  < Home />
+                  < Footer />
+                </>
+              }/> 
+              <Route path='checkout' element={
+                <>
+                  < Header />
+                  < Checkout />  
+                  < Footer />
+                </>
+              }/>
+              <Route path='payment' element={
+                <>
+                  < Header />
+                  <Elements stripe={promise}>
+                    < Payment />  
+                  </Elements>
+                </>
+              }/>
+              <Route path='orders' element={
+                <>
+                  < Header />
+                  < Orders />
+                  < Footer />
+                </>
+              }/>
+              <Route path='product_page' element={
               <>
                 < Header />
-                < Home />
-                < Footer />
-              </>
-            }/> 
-            <Route path='checkout' element={
-              <>
-                < Header />
-                < Checkout />  
+                < ProductPage />
                 < Footer />
               </>
             }/>
-            <Route path='payment' element={
-              <>
-                < Header />
-                <Elements stripe={promise}>
-                  < Payment />  
-                </Elements>
-              </>
-            }/>
-            <Route path='orders' element={
-              <>
-                < Header />
-                < Orders />
-                < Footer />
-              </>
-            }/>
-            <Route path='product_page' element={
-            <>
-              < Header />
-              < ProductPage />
-              < Footer />
-            </>
-          }/>
-            <Route path='login' element={< Login /> }/> 
-            <Route path='*' element={<h1>404 Page Not Found</h1>}/> 
-          </Routes>
-        </Wrapper>
-      </div>
-    </BrowserRouter>
+              <Route path='login' element={< Login /> }/> 
+              <Route path='*' element={<h1>404 Page Not Found</h1>}/> 
+            </Routes>
+          </Wrapper>
+        </div>
+      </BrowserRouter>
+    </PaypalScriptProvider>
   );
 }
 
