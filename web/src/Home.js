@@ -17,7 +17,7 @@ function Home() {
                     image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'
                     rating={5}/>
                 <Product 
-                    id='152395'
+                    id='152391'
                     title='The lean startup'
                     price={29.99}
                     image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'
@@ -26,19 +26,19 @@ function Home() {
 
             <div className='home__row'>
                 <Product 
-                    id='152395'
+                    id='152393'
                     title='The lean startup'
                     price={29.99}
                     image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'
                     rating={3}/>
                 <Product 
-                    id='152395'
+                    id='152394'
                     title='The lean startup'
                     price={29.99}
                     image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'
                     rating={5}/>                
                 <Product 
-                    id='152395'
+                    id='152396'
                     title='The lean startup'
                     price={29.99}
                     image='https://images-na.ssl-images-amazon.com/images/I/51Zymoq7UnL._AC_SY400_.jpg'

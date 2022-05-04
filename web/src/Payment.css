@@ -47,3 +47,18 @@
     padding: 0 30%;
 }
 
+.payment__cardButton {
+    width: 240px;
+    margin-top: 20px;
+    height: 30px;
+}
+
+.payment__cardDetails {
+    width: 360px;
+}
+
+.payment__items > p {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
