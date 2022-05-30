@@ -38,10 +38,19 @@ app.post("/payments/create", async (request, response) => {
 app.post("/product_page", async (request, response) => {
   const id = request.query.id;
   console.log("Product id >> ", id);
-  connection.query("SELECT * FROM  product", (err, result, fields) => {
+  connection.query("SELECT * FROM  product WHERE id=" + id, (err, result, fields) => {
     if (err) throw err;
 
     console.log("The solution is: ", result);
+
+    //OK - Created
+    response.status(201).send({
+      id: result[0].id,
+      desc: result[0].desc,
+      price: result[0].price,
+      name: result[0].name,
+      img: result[0].img,
+    });
   });
 });
 

@@ -9,12 +9,13 @@
   max-height: 400px;
   min-width: 100px;
   background-color: white;
+  border: 2px solid transparent;
+  border-radius: 16px;
   z-index: 1;
 }
 
 .product:hover {
-  margin: 0;
-  padding: 30px;
+  border-color: #111;
 }
 
 .product__rating {
@@ -26,13 +27,7 @@
   width: 100%;
   object-fit: contain;
   margin-bottom: 15px;
-  border: 2px solid transparent;
-  border-radius: 16px;
   padding: 5px;
-}
-
-.product>a>img:hover{
-  border: 2px solid black;
 }
 
 .product > button {
