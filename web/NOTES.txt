@@ -5,3 +5,4 @@ To be implemented:
     - !! Remove user auth from firebase, start checking hosts and migrating
     - Get familiar with Stripe and expand setup
     - Add paypal payments
+    - Handle server side errors

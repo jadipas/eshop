@@ -49,20 +49,28 @@ function ProductPage() {
   if (loading) {
     return <div className="productPage">Loading...</div>;
   } else {
-    return (
-      <div className="productPage">
-        <img
-          className="productPage__image"
-          src={require(`${info.img}`)}
-          alt="product image"
-        />
-        <div className="info">
-          <span>{info.name}</span>
-
-          <p>{info.desc}</p>
+    if ("err_msg" in info) {
+      return (
+        <div className="productPage">
+          <h1>{info.err_msg}</h1>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="productPage">
+          <img
+            className="productPage__image"
+            src={require(`${info.img}`)}
+            alt="product image"
+          />
+          <div className="productPage__info">
+            <h1>{info.name}</h1>
+
+            <p>{info.desc}</p>
+          </div>
+        </div>
+      );
+    }
   }
 }
 

@@ -38,20 +38,32 @@ app.post("/payments/create", async (request, response) => {
 app.post("/product_page", async (request, response) => {
   const id = request.query.id;
   console.log("Product id >> ", id);
-  connection.query("SELECT * FROM  product WHERE id=" + id, (err, result, fields) => {
-    if (err) throw err;
+  connection.query(
+    "SELECT * FROM  product WHERE id=" + id,
+    (err, result, fields) => {
+      if (err) {
+        console.log("something went wrong" + err);
+      } else {
+        if (result.length > 0) {
+          console.log("The solution is: ", result);
 
-    console.log("The solution is: ", result);
-
-    //OK - Created
-    response.status(201).send({
-      id: result[0].id,
-      desc: result[0].desc,
-      price: result[0].price,
-      name: result[0].name,
-      img: result[0].img,
-    });
-  });
+          //OK - Created
+          response.status(201).send({
+            id: result[0].id,
+            desc: result[0].desc,
+            price: result[0].price,
+            name: result[0].name,
+            img: result[0].img,
+          });
+        } else {
+          console.log("No result found");
+          response.status(406).send({
+            err_msg: "No product with id: " + id + " found",
+          });
+        }
+      }
+    }
+  );
 });
 
 app.listen(process.env.PORT || 4000, () => {
