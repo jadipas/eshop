@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import axios from "./axios";
+import ImageSlider from "./ImageSlider";
 import "./ProductPage.css";
 import { useStateValue } from "./StateProvider";
 
@@ -58,11 +59,9 @@ function ProductPage() {
     } else {
       return (
         <div className="productPage">
-          <img
-            className="productPage__image"
-            src={require(`${info.img}`)}
-            alt="product image"
-          />
+          <div className="productPage__image">
+            <ImageSlider images={[info.img, info.img]} />
+          </div>
           <div className="productPage__info">
             <h1>{info.name}</h1>
 

@@ -1,0 +1,36 @@
+.imageSlider {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imageSlider__rightArrow {
+    position: absolute;
+    top: 50%;
+    right: 32px;
+    font-size: 3rem;
+    color: black;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+}
+
+.imageSlider__leftArrow {
+    position: absolute;
+    top: 50%;
+    left: 32px;
+    font-size: 3rem;
+    color: black;
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+}
+
+.imageSlider__inactiveImage {
+    opacity: 0;
+}
+
+.imageSlider__activeImage {
+    transition: 0.1s ease-in-out;
+}

@@ -3,15 +3,15 @@
     width: 70%;
     margin-left: auto;
     margin-right: auto;
-    height: 100vh;
     background-color: white;
     display: flex;
     flex-wrap: wrap;
 }
 
 .productPage__image {
-    flex: 0.5;
-    height: 50%;
+    margin-top: 64px;
+    margin-left: 20px;
+    width: 50%;
 }
 
 .productPage__info h1 {
