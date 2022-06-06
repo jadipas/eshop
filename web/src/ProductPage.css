@@ -6,16 +6,17 @@
     background-color: white;
     display: flex;
     flex-wrap: wrap;
+    min-height: 100vh;
 }
 
 .productPage__image {
-    margin-top: 64px;
+    margin-top: 20vh;
     margin-left: 20px;
-    width: 50%;
+    width: 60%;
 }
 
 .productPage__info h1 {
-    margin-top: 100px;
+    margin-top: 20vh;
     font-size: 24px;
     letter-spacing: 0.07em;
 }

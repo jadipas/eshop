@@ -8,9 +8,9 @@
 .imageSlider__rightArrow {
     position: absolute;
     top: 50%;
-    right: 32px;
+    right: 10px;
     font-size: 3rem;
-    color: black;
+    color: darkgrey;
     z-index: 10;
     cursor: pointer;
     user-select: none;
@@ -19,9 +19,9 @@
 .imageSlider__leftArrow {
     position: absolute;
     top: 50%;
-    left: 32px;
+    left: 10px;
     font-size: 3rem;
-    color: black;
+    color: darkgrey;
     z-index: 10;
     cursor: pointer;
     user-select: none;

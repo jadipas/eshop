@@ -60,7 +60,7 @@ function ProductPage() {
       return (
         <div className="productPage">
           <div className="productPage__image">
-            <ImageSlider images={[info.img, info.img]} />
+            <ImageSlider images={info.img.split(',')} />
           </div>
           <div className="productPage__info">
             <h1>{info.name}</h1>
