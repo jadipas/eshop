@@ -10,6 +10,13 @@ function ProductPage() {
   const [info, setInfo] = useState();
   const [loading, setLoading] = useState(true);
   const [{ basket }, dispatch] = useStateValue();
+  const [q, setQ] = useState(
+    basket.find((basketItem) => basketItem.id === info.id)
+      ? basket.find((basketItem) => basketItem.id === info.id).quantity
+      : 0
+  );
+
+  console.log(q);
 
   const addToBasket = (e) => {
     // dispatch item to data layer
@@ -24,6 +31,45 @@ function ProductPage() {
         rating: 0,
       },
     });
+  };
+
+  const decreaseQuantity = (e) => {
+    //remove item from basket
+    e.preventDefault();
+
+    if (q > 1) {
+      setQ(q - 1);
+      dispatch({
+        type: "DECREASE_QUANTITY",
+        id: info.id,
+      });
+    }
+  };
+
+  const increaseQuantity = (e) => {
+    //remove item from basket
+    e.preventDefault();
+    console.log(q)
+    if (q === 0) {
+      dispatch({
+        type: "ADD_TO_BASKET",
+        item: {
+          id: info.id,
+          title: info.name,
+          image: info.img,
+          price: info.price,
+          rating: 0,
+        },
+      });
+      setQ(q + 1);
+    }else{
+      setQ(q + 1);
+      dispatch({
+        type: "INCREASE_QUANTITY",
+        id: info.id,
+      });
+    }
+
   };
 
   useEffect(() => {
@@ -59,13 +105,28 @@ function ProductPage() {
     } else {
       return (
         <div className="productPage">
+          <h1>{info.name}</h1>
           <div className="productPage__image">
-            <ImageSlider images={info.img.split(',')} />
+            <ImageSlider images={info.img.split(",")} />
           </div>
           <div className="productPage__info">
-            <h1>{info.name}</h1>
-
             <p>{info.desc}</p>
+          </div>
+          <div className="checkoutProduct__quantity">
+            <button
+              className="checkoutProduct__quantityButton"
+              onClick={decreaseQuantity}
+              disabled={!(q > 1)}
+            >
+              -
+            </button>
+            <p>{q}</p>
+            <button
+              className="checkoutProduct__quantityButton"
+              onClick={increaseQuantity}
+            >
+              +
+            </button>
           </div>
         </div>
       );

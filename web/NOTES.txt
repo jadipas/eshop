@@ -6,3 +6,6 @@ To be implemented:
     - Get familiar with Stripe and expand setup
     - Add paypal payments
     - Handle server side errors
+
+Bugs:
+    -Check quantity controller in production (fires twice in development)

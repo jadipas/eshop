@@ -5,14 +5,21 @@
     margin-right: auto;
     background-color: white;
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
     min-height: 100vh;
 }
 
 .productPage__image {
-    margin-top: 20vh;
-    margin-left: 20px;
     width: 60%;
+    min-width: 240px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.productPage__info {
+    margin-top: 20px;
+    width: 100%;
 }
 
 .productPage__info h1 {
