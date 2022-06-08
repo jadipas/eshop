@@ -24,15 +24,33 @@ app.post("/payments/create", async (request, response) => {
   const total = request.query.total;
   console.log("Payment Request Received for ", total);
 
-  const paymentIntent = await stripe.paymentIntents.create({
-    amount: total,
-    currency: "USD",
-  });
+  async function getPaymentIntent() {
+    try {
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: total,
+        currency: "USD",
+      });
 
-  //OK - Created
-  response.status(201).send({
-    clientSecret: paymentIntent.client_secret,
-  });
+      //OK - Created
+      response.status(201).send({
+        clientSecret: paymentIntent.client_secret,
+      });
+    } catch (e) {
+      switch (e.type) {
+        case "StripeCardError":
+          console.log(`A payment error occurred: ${e.message}`);
+          break;
+        case "StripeInvalidRequestError":
+          console.log("An invalid request occurred.");
+          break;
+        default:
+          console.log("Another problem occurred, maybe unrelated to Stripe.");
+          break;
+      }
+    }
+  }
+
+  getPaymentIntent();
 });
 
 app.post("/product_page", async (request, response) => {
@@ -43,6 +61,7 @@ app.post("/product_page", async (request, response) => {
     (err, result, fields) => {
       if (err) {
         console.log("something went wrong" + err);
+        next(err);
       } else {
         if (result.length > 0) {
           console.log("The solution is: ", result);
