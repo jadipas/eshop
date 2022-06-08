@@ -15,7 +15,7 @@
 }
 
 .product:hover {
-  border-color: #111;
+  border-color: #008C96;
 }
 
 .product__rating {
@@ -31,11 +31,18 @@
 }
 
 .product > button {
-  background: #f0c14b;
-  border: 1px solid;
+  background: #CDDDDD;
   margin-top: 10px;
-  border-color: #a88734 #9c7e31 #846a29;
-  color: #111;
+  color: black;
+  border: 1px solid #008C96;
+  padding: 8px;
+  transition: 0.5s ease-out;
+}
+
+.product>button:active {
+  background: #008C96;
+  color: white;
+  border: 1px solid #CDDDDD;
 }
 
 .product__price {

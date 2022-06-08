@@ -10,10 +10,16 @@
     bottom: 0;
     right: 10px;
     font-size: 3rem;
-    color: darkgrey;
+    color: rgb(212, 211, 211);
     z-index: 10;
     cursor: pointer;
     user-select: none;
+    transition: 0.5s ease-in-out;
+}
+
+.imageSlider__rightArrow:hover {
+    transition: 0.5s ease-in-out;
+    color: rgb(167, 167, 167);
 }
 
 .imageSlider__leftArrow {
@@ -21,10 +27,16 @@
     bottom: 0;
     left: 10px;
     font-size: 3rem;
-    color: darkgrey;
+    color: rgb(212, 211, 211);
     z-index: 10;
     cursor: pointer;
     user-select: none;
+    transition: 0.5s ease-in-out;
+}
+
+.imageSlider__leftArrow:hover {
+    transition: 0.5s ease-in-out;
+    color: rgb(167, 167, 167);
 }
 
 .imageSlider__inactiveImage {

@@ -6,6 +6,9 @@ To be implemented:
     - Get familiar with Stripe and expand setup
     - Add paypal payments
     - Handle server side errors
+    - Responsive header and pages (burger menu with a twist probably)
+    - Add an X button in basket to return to last pages
+    - Add link on product in basket to go to product page
 
 Bugs:
     -Check quantity controller in production (fires twice in development)

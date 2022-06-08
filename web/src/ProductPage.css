@@ -31,3 +31,35 @@
 .productPage__info p {
     letter-spacing: 0.05em;
 }
+
+.productPage__quantity {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.productPage__quantity>p {
+    padding: 3px;
+}
+
+.productPage__quantityButton {
+    margin: 10px;
+    text-align: center;
+    padding: 5px 10px;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+
+.productPage__quantityButton:active {
+    background-color: #008c96;
+}
+
+.productPage__quantityButton:disabled {
+    background-color: white;
+}
+
+.productPage__price {
+    font-size: x-large;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+}

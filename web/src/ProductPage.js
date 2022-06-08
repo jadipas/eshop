@@ -15,23 +15,9 @@ function ProductPage() {
       ? basket.find((basketItem) => basketItem.id === info.id).quantity
       : 0
   );
+  const [isDisabled, setisDisabled] = useState(!(q > 1));
 
   console.log(q);
-
-  const addToBasket = (e) => {
-    // dispatch item to data layer
-    e.preventDefault();
-    dispatch({
-      type: "ADD_TO_BASKET",
-      item: {
-        id: info.id,
-        title: info.name,
-        image: info.img,
-        price: info.price,
-        rating: 0,
-      },
-    });
-  };
 
   const decreaseQuantity = (e) => {
     //remove item from basket
@@ -43,13 +29,20 @@ function ProductPage() {
         type: "DECREASE_QUANTITY",
         id: info.id,
       });
+    } else if (q === 1) {
+      setQ(q - 1);
+      setisDisabled(true);
+      dispatch({
+        type: "REMOVE_FROM_BASKET",
+        id: info.id,
+      });
     }
   };
 
   const increaseQuantity = (e) => {
     //remove item from basket
     e.preventDefault();
-    console.log(q)
+    console.log(q);
     if (q === 0) {
       dispatch({
         type: "ADD_TO_BASKET",
@@ -62,14 +55,14 @@ function ProductPage() {
         },
       });
       setQ(q + 1);
-    }else{
+      setisDisabled(false);
+    } else {
       setQ(q + 1);
       dispatch({
         type: "INCREASE_QUANTITY",
         id: info.id,
       });
     }
-
   };
 
   useEffect(() => {
@@ -109,24 +102,25 @@ function ProductPage() {
           <div className="productPage__image">
             <ImageSlider images={info.img.split(",")} />
           </div>
-          <div className="productPage__info">
-            <p>{info.desc}</p>
-          </div>
-          <div className="checkoutProduct__quantity">
+          <div className="productPage__price">{info.price}$</div>
+          <div className="productPage__quantity">
             <button
-              className="checkoutProduct__quantityButton"
+              className="productPage__quantityButton"
               onClick={decreaseQuantity}
-              disabled={!(q > 1)}
+              disabled={isDisabled}
             >
               -
             </button>
             <p>{q}</p>
             <button
-              className="checkoutProduct__quantityButton"
+              className="productPage__quantityButton"
               onClick={increaseQuantity}
             >
               +
             </button>
+          </div>
+          <div className="productPage__info">
+            <p>{info.desc}</p>
           </div>
         </div>
       );
