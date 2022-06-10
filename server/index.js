@@ -104,6 +104,7 @@ app.post("/register", async (req, res) => {
   console.log(req.body);
   if (
     req.body.hasOwnProperty("username") &&
+    req.body.hasOwnProperty("email") &&
     req.body.hasOwnProperty("password") &&
     req.body.hasOwnProperty("rpassword")
   ) {
@@ -111,14 +112,16 @@ app.post("/register", async (req, res) => {
       try {
         // 10 is the number of rounds and condenses the salt step
         const hashedPass = await bcrypt.hash(req.body.password, 10);
-        const user = { username: req.body.username, password: hashedPass };
+        const user = { username: req.body.username, password: hashedPass, email: req.body.email };
 
         try {
           connection.query(
-            "INSERT INTO users(username,password) VALUES('" +
+            "INSERT INTO users(username,password,email) VALUES('" +
               user.username +
               "','" +
               user.password +
+              "','" +
+              user.email +
               "');",
             (err, result, fields) => {
               if (err) {
@@ -149,10 +152,10 @@ app.post("/register", async (req, res) => {
 });
 
 //Login existing User
-app.post("/login", authenticateToken, (req, res) => {
+app.post("/login", (req, res) => {
   try {
     connection.query(
-      "SELECT * FROM  users WHERE username='" + req.body.username + "'",
+      "SELECT * FROM  users WHERE username='" + req.body.username + "' or email='"+ req.body.username + "'",
       async (err, result, fields) => {
         if (err) {
           console.log("Login error: " + err);
@@ -163,9 +166,16 @@ app.post("/login", authenticateToken, (req, res) => {
             try {
               //Safe way to compare passwords
               if (await bcrypt.compare(req.body.password, result[0].password)) {
-                const user = {name: req.body.username, password: req.body.password}
-                const access_token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
-                res.json({access_token: access_token});
+                const user = {
+                  name: req.body.username,
+                  password: req.body.password,
+                };
+                /*const access_token = jwt.sign(
+                  user,
+                  process.env.ACCESS_TOKEN_SECRET
+                );*/
+                res.json("Login success!!");
+                //res.json({access_token: access_token});
               } else {
                 res.send("Incorrect password");
               }
@@ -187,7 +197,7 @@ app.post("/login", authenticateToken, (req, res) => {
   }
 });
 
-//Authentication Middleware
+//Authentication Middleware ---to be implemented
 function authenticateToken(req,res,next) {
   const auth_header = req.headers['authorization']
   const token = auth_header && auth_header.split(' ')[1]
