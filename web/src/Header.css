@@ -59,7 +59,8 @@
   color: white;
   border: 1px solid transparent;
   padding: 3px;
-  min-width: 70px;
+  min-width: 50px;
+  margin-right: 20px;
 }
 
 .header__basketCount {

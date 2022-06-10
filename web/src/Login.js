@@ -2,6 +2,7 @@ import { Link , useNavigate} from 'react-router-dom'
 import React, { useState } from 'react'
 import "./Login.css"
 import { auth } from "./firebase";
+import logo from "./images/Fwash_Logo.png";
 
 function Login() {
     const nav = useNavigate();
@@ -38,7 +39,7 @@ function Login() {
     return (
         <div className='login'>
             <Link to='/'>
-                <img className='login__logo' src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png' alt=''/>
+                <img className='login__logo' src={logo} alt=''/>
             </Link>
 
             <div className='login__container'>

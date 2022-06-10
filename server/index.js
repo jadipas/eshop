@@ -10,6 +10,14 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
+//Encryption setup
+const bcrypt = require("bcrypt");
+
+//JWT init
+const jwt = require("jsonwebtoken");
+app.use(express.json());
+
+//MySQL Connection
 const mysql = require("mysql");
 const connection = mysql.createConnection({
   host: "localhost",
@@ -55,12 +63,14 @@ app.post("/payments/create", async (request, response) => {
 
 app.post("/product_page", async (request, response) => {
   const id = request.query.id;
-  console.log("Product id >> ", id);
+  //console.log("Product id >> ", id);
+
+  //Search for product id in db
   connection.query(
     "SELECT * FROM  product WHERE id=" + id,
     (err, result, fields) => {
       if (err) {
-        console.log("something went wrong" + err);
+        console.log("Error in fetching: " + err);
         next(err);
       } else {
         if (result.length > 0) {
@@ -84,6 +94,111 @@ app.post("/product_page", async (request, response) => {
     }
   );
 });
+
+//Register a new User
+app.post("/register", async (req, res) => {
+  //bcrypt will add a 'salt' to make pass breaking harder
+  //and hash = h(salt + pass)
+  //eg pass1 == pass2 but salt1 != salt2 so hash1 != hash2
+
+  console.log(req.body);
+  if (
+    req.body.hasOwnProperty("username") &&
+    req.body.hasOwnProperty("password") &&
+    req.body.hasOwnProperty("rpassword")
+  ) {
+    if (!req.body.password.localeCompare(req.body.rpassword)) {
+      try {
+        // 10 is the number of rounds and condenses the salt step
+        const hashedPass = await bcrypt.hash(req.body.password, 10);
+        const user = { username: req.body.username, password: hashedPass };
+
+        try {
+          connection.query(
+            "INSERT INTO users(username,password) VALUES('" +
+              user.username +
+              "','" +
+              user.password +
+              "');",
+            (err, result, fields) => {
+              if (err) {
+                console.log("Error in creating user: " + err);
+                next(err);
+              } else {
+                res.sendStatus(201);
+              }
+            }
+          );
+        } catch (e) {
+          console.log(e);
+          next(e);
+        }
+      } catch (e) {
+        console.log(e);
+        next(e);
+      }
+    } else {
+      console.log("Mismatched passwords");
+      res.status(500);
+    }
+  } else {
+    console.log("Missing fields in request");
+    next(err);
+    res.status(500);
+  }
+});
+
+//Login existing User
+app.post("/login", authenticateToken, (req, res) => {
+  try {
+    connection.query(
+      "SELECT * FROM  users WHERE username='" + req.body.username + "'",
+      async (err, result, fields) => {
+        if (err) {
+          console.log("Login error: " + err);
+          next(err);
+        } else {
+          if (result.length > 0) {
+            console.log("The user is: ", result);
+            try {
+              //Safe way to compare passwords
+              if (await bcrypt.compare(req.body.password, result[0].password)) {
+                const user = {name: req.body.username, password: req.body.password}
+                const access_token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET)
+                res.json({access_token: access_token});
+              } else {
+                res.send("Incorrect password");
+              }
+            } catch (e) {
+              res.sendStatus(500);
+            }
+          } else {
+            console.log("No result found");
+            response.status(406).send({
+              err_msg: "No user with username: " + res.body.username + " found",
+            });
+          }
+        }
+      }
+    );
+  } catch (e) {
+    console.log(e);
+    next(e);
+  }
+});
+
+//Authentication Middleware
+function authenticateToken(req,res,next) {
+  const auth_header = req.headers['authorization']
+  const token = auth_header && auth_header.split(' ')[1]
+  if(token === null) res.sendStatus(401)
+
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(401)
+    req.user = user
+    next()
+  })
+}
 
 app.listen(process.env.PORT || 4000, () => {
   console.log("Server is listening on port 4000");

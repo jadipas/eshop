@@ -12,6 +12,7 @@
   border: 2px solid transparent;
   border-radius: 16px;
   z-index: 1;
+  transition: 0.2s ease-in-out;
 }
 
 .product:hover {
