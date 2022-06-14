@@ -112,7 +112,11 @@ app.post("/register", async (req, res) => {
       try {
         // 10 is the number of rounds and condenses the salt step
         const hashedPass = await bcrypt.hash(req.body.password, 10);
-        const user = { username: req.body.username, password: hashedPass, email: req.body.email };
+        const user = {
+          username: req.body.username,
+          password: hashedPass,
+          email: req.body.email,
+        };
 
         try {
           connection.query(
@@ -155,7 +159,11 @@ app.post("/register", async (req, res) => {
 app.post("/login", (req, res) => {
   try {
     connection.query(
-      "SELECT * FROM  users WHERE username='" + req.body.username + "' or email='"+ req.body.username + "'",
+      "SELECT * FROM  users WHERE username='" +
+        req.body.username +
+        "' or email='" +
+        req.body.username +
+        "'",
       async (err, result, fields) => {
         if (err) {
           console.log("Login error: " + err);
@@ -170,11 +178,11 @@ app.post("/login", (req, res) => {
                   name: req.body.username,
                   password: req.body.password,
                 };
-                /*const access_token = jwt.sign(
+                const access_token = jwt.sign(
                   user,
                   process.env.ACCESS_TOKEN_SECRET
-                );*/
-                res.json("Login success!!");
+                );
+                res.json({ accessToken: access_token });
                 //res.json({access_token: access_token});
               } else {
                 res.send("Incorrect password");
@@ -197,17 +205,21 @@ app.post("/login", (req, res) => {
   }
 });
 
-//Authentication Middleware ---to be implemented
-function authenticateToken(req,res,next) {
-  const auth_header = req.headers['authorization']
-  const token = auth_header && auth_header.split(' ')[1]
-  if(token === null) res.sendStatus(401)
+app.post("/orders", (req,res)=>{
+  
+})
+//Authentication Middleware
+function authenticateToken(req, res, next) {
+  const auth_header = req.headers["authorization"];
+  console.log("--->", auth_header)
+  const token = auth_header && auth_header.split(" ")[1];
+  if (token === null) res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(401)
-    req.user = user
-    next()
-  })
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
 }
 
 app.listen(process.env.PORT || 4000, () => {

@@ -1,12 +1,37 @@
-import React from 'react'
-import './Orders.css'
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useStateValue } from "./StateProvider";
+import "./Orders.css";
+
 function Orders() {
-    return (
-        <div className = 'orders'>
-            <h1>Your Orders</h1>
-        </div>
-    )
-    
+  const [searchParams] = useSearchParams();
+  const [info, setInfo] = useState();
+  const [loading, setLoading] = useState(true);
+  const [{ basket }, dispatch] = useStateValue();
+
+  useEffect(() => {
+    const getProductInfo = async () => {
+      await axios
+        .post("/orders", {
+          jwt: "a",
+        })
+        .then(function (response) {
+          setInfo(response.data);
+          setLoading(false);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    };
+
+    getProductInfo();
+  }, []);
+
+  if (loading) {
+    return <div className="productPage">Loading...</div>;
+  } else {
+  }
 }
 
-export default Orders
+export default Orders;
