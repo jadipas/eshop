@@ -175,8 +175,8 @@ app.post("/login", (req, res) => {
               //Safe way to compare passwords
               if (await bcrypt.compare(req.body.password, result[0].password)) {
                 const user = {
-                  name: req.body.username,
-                  password: req.body.password,
+                  username: req.body.username,
+                  email: result[0].email,
                 };
                 const access_token = jwt.sign(
                   user,
@@ -210,7 +210,60 @@ app.post("/login", (req, res) => {
 
 //Fetch orders of logged in user
 app.get("/orders", authenticateToken, (req, res) => {
+  connection.query(
+    'select * from orders where user_id=(select user_id from users where username="'+ req.user.username +'");',
+    (err, result, fields) => {
+      if (err) {
+        console.log("Error in fetching: " + err);
+        next(err);
+      } else {
+        if (result.length > 0) {
+          console.log("The solution is: ", result);
 
+          const final = result.map(o => {
+            const ndate = o.date.slice(0,9)
+            console.log(ndate)
+            const products = o.product_ids.split(",").map(id => {
+              try {
+                connection.query(
+                  "select * from products where id=" + id + ";",
+                  (err, result, fields) => {
+                    if (err) {
+                      console.log("Error in creating user: " + err);
+                      next(err);
+                    } else {
+                      console.log(result);
+                      return result;
+                    }
+                  }
+                );
+              } catch (e) {
+                console.log(e);
+                next(e);
+              }
+            })
+            console.log(products)
+            return {
+              date: ndate,
+              products: products
+            }
+            
+          })
+
+          console.log(final)
+          //OK - Created
+          response.status(201).send({
+            orders: final
+          });
+        } else {
+          console.log("No result found");
+          response.status(406).send({
+            err_msg: "No past orders for user",
+          });
+        }
+      }
+    }
+  );
   res.json({orders: []})
 });
 

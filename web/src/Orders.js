@@ -34,6 +34,7 @@ function Orders() {
   if (loading) {
     return <div className="productPage">Loading...</div>;
   } else {
+    return null
   }
 }
 

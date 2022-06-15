@@ -45,17 +45,15 @@ function Header() {
           </div>
         </Link>
 
-        <div className="header__option">
+        {user ? (
           <Link to="/orders">
-            <span className="header__optionLineOne"> Return </span>
-            <span className="header__optionLineTwo"> & Orders</span>
+            <div className="header__option">
+              <span className="header__optionLineOne"> Past </span>
+              <span className="header__optionLineTwo"> Orders</span>
+            </div>
           </Link>
-        </div>
+        ) : null}
 
-        <div className="header__option">
-          <span className="header__optionLineOne"> Your </span>
-          <span className="header__optionLineTwo"> Prime </span>
-        </div>
 
         <Link to="/checkout">
           <div className="header__optionBasket">
