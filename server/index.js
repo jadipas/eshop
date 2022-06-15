@@ -170,7 +170,7 @@ app.post("/login", (req, res) => {
           next(err);
         } else {
           if (result.length > 0) {
-            console.log("The user is: ", result);
+            //console.log("The user is: ", result);
             try {
               //Safe way to compare passwords
               if (await bcrypt.compare(req.body.password, result[0].password)) {
@@ -182,7 +182,10 @@ app.post("/login", (req, res) => {
                   user,
                   process.env.ACCESS_TOKEN_SECRET
                 );
-                res.json({ accessToken: access_token });
+                res.json({
+                  accessToken: access_token,
+                  username: req.body.username,
+                });
                 //res.json({access_token: access_token});
               } else {
                 res.send("Incorrect password");
@@ -205,19 +208,23 @@ app.post("/login", (req, res) => {
   }
 });
 
-app.post("/orders", (req,res)=>{
-  
-})
+//Fetch orders of logged in user
+app.get("/orders", authenticateToken, (req, res) => {
+
+  res.json({orders: []})
+});
+
 //Authentication Middleware
 function authenticateToken(req, res, next) {
   const auth_header = req.headers["authorization"];
-  console.log("--->", auth_header)
+  console.log(auth_header);
   const token = auth_header && auth_header.split(" ")[1];
   if (token === null) res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
+    console.log(user);
     next();
   });
 }

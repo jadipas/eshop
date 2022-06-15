@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import logo from "./images/Fwash_Logo.png";
 import axios from "./axios";
+import { useStateValue } from "./StateProvider";
 
 function Login() {
   const nav = useNavigate();
@@ -11,6 +12,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const [rpassword, setRpassword] = useState("");
   const [loginMode, setMode] = useState(true);
+  const [{basket, user},dispatch] = useStateValue();
 
   const signIn = async (e) => {
     e.preventDefault();
@@ -19,7 +21,12 @@ function Login() {
       username: email,
       password: password,
     });
-    console.log(response);
+    
+    //console.log(response.data);
+    dispatch({
+      type: "SET_USER",
+      user: response.data
+    });
     nav("/");
   };
 

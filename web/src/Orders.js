@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from "./axios";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
@@ -8,13 +8,16 @@ function Orders() {
   const [searchParams] = useSearchParams();
   const [info, setInfo] = useState();
   const [loading, setLoading] = useState(true);
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
 
   useEffect(() => {
     const getProductInfo = async () => {
+      console.log(user)
       await axios
-        .post("/orders", {
-          jwt: "a",
+        .get("/orders", {
+          headers: {
+            Authorization: "Bearer " + user.accessToken,
+          },
         })
         .then(function (response) {
           setInfo(response.data);
