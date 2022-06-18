@@ -19,6 +19,7 @@ app.use(express.json());
 
 //MySQL Connection
 const mysql = require("mysql");
+const { response } = require("express");
 const connection = mysql.createConnection({
   host: "localhost",
   user: process.env.SQL_USER,
@@ -26,7 +27,14 @@ const connection = mysql.createConnection({
   database: "db",
 });
 
-connection.connect();
+connection.connect(function (err) {
+  if (err) {
+    console.error("error connecting: " + err.stack);
+    return;
+  }
+
+  console.log("connected as id " + connection.threadId);
+});
 
 app.post("/payments/create", async (request, response) => {
   const total = request.query.total;
@@ -210,74 +218,73 @@ app.post("/login", (req, res) => {
 
 //Fetch orders of logged in user
 app.get("/orders", authenticateToken, (req, res) => {
+  console.log('Authenticated->')
   connection.query(
-    'select * from orders where user_id=(select user_id from users where username="'+ req.user.username +'");',
-    (err, result, fields) => {
+    'select * from orders where user_id=(select user_id from users where username="' +
+      req.user.username +
+      '");',
+    (err, rows, fields) => {
       if (err) {
         console.log("Error in fetching: " + err);
-        next(err);
-      } else {
-        if (result.length > 0) {
-          console.log("The solution is: ", result);
-
-          const final = result.map(o => {
-            const ndate = o.date.slice(0,9)
-            console.log(ndate)
-            const products = o.product_ids.split(",").map(id => {
-              try {
-                connection.query(
-                  "select * from products where id=" + id + ";",
-                  (err, result, fields) => {
-                    if (err) {
-                      console.log("Error in creating user: " + err);
-                      next(err);
-                    } else {
-                      console.log(result);
-                      return result;
-                    }
-                  }
-                );
-              } catch (e) {
-                console.log(e);
-                next(e);
+        throw err;
+      }
+      
+      if (rows.length > 0) {
+        //console.log("Order result: ", rows);
+        
+        const final = rows.map((o) => {
+          const tdate = o.date.toString().split(" ");
+          const ndate = tdate[1] + " " + tdate[2] + " " + tdate[3];
+          console.log(o);
+          const products = o.product_ids.split(",").map((id) => {
+            console.log("query for products");
+            console.log("SELECT * FROM product where id=" + id);
+            connection.query(
+              "SELECT * FROM product where id=" + id,
+              (err2, result, fields2) => {
+                console.log("Order result: ", result);
               }
-            })
-            console.log(products)
-            return {
-              date: ndate,
-              products: products
-            }
-            
-          })
+            );
+          });
 
-          console.log(final)
-          //OK - Created
-          response.status(201).send({
-            orders: final
-          });
-        } else {
-          console.log("No result found");
-          response.status(406).send({
-            err_msg: "No past orders for user",
-          });
-        }
+          /*
+          return {
+            date: ndate,
+            products: products,
+          };*/
+          console.log(products);
+        });
+
+        //response.sendStatus(200);
+        //res.json({ orders: [] });
+
+        /*
+        console.log(final);
+        //OK - Created
+        response.status(201).send({
+          orders: final,
+        });*/
+      } else {
+        console.log("No result found");
+        /*response.status(406).send({
+          err_msg: "No past orders for user",
+        });*/
       }
     }
   );
-  res.json({orders: []})
 });
 
 //Authentication Middleware
 function authenticateToken(req, res, next) {
   const auth_header = req.headers["authorization"];
-  console.log(auth_header);
+  //console.log(auth_header);
   const token = auth_header && auth_header.split(" ")[1];
   if (token === null) res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
-    console.log(user);
+    //console.log(user);
     next();
   });
 }

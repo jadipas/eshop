@@ -15,9 +15,11 @@
   transition: 0.2s ease-in-out;
 }
 
+/*
 .product:hover {
   border-color: #008C96;
 }
+*/
 
 .product__rating {
   display: flex;
@@ -33,11 +35,16 @@
 
 .product > button {
   background: #CDDDDD;
-  margin-top: 10px;
+  margin-top: 15px;
   color: black;
-  border: 1px solid #008C96;
+  border: 2px solid transparent;
   padding: 8px;
+  cursor: pointer;
   transition: 0.5s ease-out;
+}
+
+.product>button:hover {
+  border: 2px solid #008C96;
 }
 
 .product>button:active {
