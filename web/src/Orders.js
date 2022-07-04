@@ -21,6 +21,7 @@ function Orders() {
         })
         .then(function (response) {
           setInfo(response.data);
+          //console.log(response.data);
           setLoading(false);
         })
         .catch(function (error) {

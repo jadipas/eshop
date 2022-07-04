@@ -4,6 +4,7 @@ require("dotenv").config();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const util = require("util");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -35,6 +36,9 @@ connection.connect(function (err) {
 
   console.log("connected as id " + connection.threadId);
 });
+
+//Set-up query with promisify for async queries
+const query = util.promisify(connection.query).bind(connection);
 
 app.post("/payments/create", async (request, response) => {
   const total = request.query.total;
@@ -218,48 +222,70 @@ app.post("/login", (req, res) => {
 
 //Fetch orders of logged in user
 app.get("/orders", authenticateToken, (req, res) => {
-  console.log('Authenticated->')
+  console.log("Authenticated->");
   connection.query(
     'select * from orders where user_id=(select user_id from users where username="' +
       req.user.username +
       '");',
-    (err, rows, fields) => {
+    async (err, rows, fields) => {
       if (err) {
         console.log("Error in fetching: " + err);
         throw err;
       }
-      
+
       if (rows.length > 0) {
         //console.log("Order result: ", rows);
-        
-        const final = rows.map((o) => {
+
+        const final = await Promise.all(rows.map(async (o) => {
           const tdate = o.date.toString().split(" ");
           const ndate = tdate[1] + " " + tdate[2] + " " + tdate[3];
-          console.log(o);
-          const products = o.product_ids.split(",").map((id) => {
-            console.log("query for products");
-            console.log("SELECT * FROM product where id=" + id);
-            connection.query(
-              "SELECT * FROM product where id=" + id,
-              (err2, result, fields2) => {
-                console.log("Order result: ", result);
-              }
-            );
-          });
 
-          /*
+          //console.log(o);
+          const counts = o.product_ids.split(",").reduce((r, s) => {
+            const key = s;
+            //console.log("s ", s);
+            r[key] = (r[key] || 0) + 1;
+
+            return r;
+          }, {});
+          //console.log(Object.keys(counts));
+          const products = await Promise.all(
+            Object.keys(counts).map(async (id) => {
+              //console.log("query for products");
+              //console.log("SELECT * FROM product where id=" + id);
+              try {
+                const result = await query(
+                  "SELECT * FROM product where id=" + id
+                );
+
+                const ans = {
+                  id: result[0].id,
+                  desc: result[0].desc,
+                  price: result[0].price,
+                  name: result[0].name,
+                  img: result[0].img,
+                  amount: counts[id],
+                };
+
+                console.log(ans);
+                return ans;
+              } catch (e) {
+                console.log(e);
+              }
+            })
+          );
+
           return {
             date: ndate,
             products: products,
-          };*/
-          console.log(products);
-        });
+          };
+        }));
 
+        //console.log(final);
         //response.sendStatus(200);
-        //res.json({ orders: [] });
+        res.json({ orders: final });
 
         /*
-        console.log(final);
         //OK - Created
         response.status(201).send({
           orders: final,
