@@ -195,20 +195,24 @@ app.post("/login", (req, res) => {
                   process.env.ACCESS_TOKEN_SECRET
                 );
                 res.json({
+                  status: 200,
                   accessToken: access_token,
                   username: req.body.username,
+                  message: "OK"
                 });
                 //res.json({access_token: access_token});
               } else {
-                res.send("Incorrect password");
+                res.status(401).send({
+                  message: "Incorrect credentials",
+                });
               }
             } catch (e) {
               res.sendStatus(500);
             }
           } else {
             console.log("No result found");
-            response.status(406).send({
-              err_msg: "No user with username: " + res.body.username + " found",
+            res.status(401).send({
+              message: "Incorrect credentials",
             });
           }
         }

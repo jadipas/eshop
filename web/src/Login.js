@@ -11,23 +11,27 @@ function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rpassword, setRpassword] = useState("");
+  const [error, setError] = useState("");
   const [loginMode, setMode] = useState(true);
   const [{basket, user},dispatch] = useStateValue();
 
   const signIn = async (e) => {
     e.preventDefault();
 
-    const response = await axios.post("/login", {
+    axios.post("/login", {
       username: email,
       password: password,
-    });
+    }).then(response => {
+      console.log(response);
+      dispatch({
+        type: "SET_USER",
+        user: response.data
+      });
+      nav("/");
+    }).catch(err => {
+      setError(err.response.data.message)
+    })
     
-    //console.log(response.data);
-    dispatch({
-      type: "SET_USER",
-      user: response.data
-    });
-    nav("/");
   };
 
   const register = async (e) => {
@@ -57,6 +61,8 @@ function Login() {
         <div className="login__container">
           <h1>Sign-in</h1>
 
+          <p className="errorMessage">{error}</p>
+          
           <form>
             <h5>E-mail or Username</h5>
             <input
