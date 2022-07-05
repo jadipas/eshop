@@ -1,0 +1,43 @@
+.orders {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.orders__row {
+    min-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    padding: 30px;
+    background-color: white;
+}
+
+.orders__rowTitles {
+    display: flex;
+    flex-direction: row;
+    box-shadow: 0px 1px lightgrey;
+    margin-bottom: 10px;
+}
+
+.orders__rowTitles > h4 {
+    flex: 0.33;
+    width: 100%;
+    text-align: right;
+}
+
+.orders__rowContent {
+    display: flex;
+    flex-direction: row;
+}
+
+.orders__rowContent > p {
+    flex: 0.33;
+    width: 100%;
+    text-align: right;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
