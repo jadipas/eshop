@@ -50,7 +50,7 @@
 .product>button:active {
   background: #008C96;
   color: white;
-  border: 1px solid #CDDDDD;
+  border: 2px solid #CDDDDD;
 }
 
 .product__price {

@@ -65,7 +65,9 @@
 }
 
 .header__basketCount {
-  margin: 0 10px;
+  width: 50px;
+  padding: 0 10px;
+  text-align: center;
 }
 
 .header__nav {
@@ -96,8 +98,4 @@
   border-radius: 6px;
 }
 
-.header__logo:hover {
-  border: 1px solid white;
-  border-radius: 6px;
-}
 
